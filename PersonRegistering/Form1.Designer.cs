@@ -84,7 +84,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(646, 165);
+            this.label1.Location = new System.Drawing.Point(534, 170);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 16);
             this.label1.TabIndex = 6;
@@ -93,6 +93,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.password_label);
@@ -101,7 +102,9 @@
             this.Controls.Add(this.login_btn);
             this.Controls.Add(this.username_txt);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

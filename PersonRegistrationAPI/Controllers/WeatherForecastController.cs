@@ -30,6 +30,7 @@ namespace PersonRegistrationAPI.Controllers
             var asd = model.Id;
 
             return "sucess";
-;        }
+            ;
+        }
     }
 }

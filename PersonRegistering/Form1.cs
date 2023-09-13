@@ -1,20 +1,13 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
 
 namespace PersonRegistering
 {
@@ -88,9 +81,14 @@ namespace PersonRegistering
                         if (role == "admin")
                         {
 
-                            DashboardForm dashboardForm = new DashboardForm(username, role) {};
+                            DashboardForm dashboardForm = new DashboardForm(username, role) { };
                             dashboardForm.Visible = true;
 
+                        }
+                        else if (role == "user")
+                        {
+                            DashboardForm dashboardForm = new DashboardForm(username, role) { };
+                            dashboardForm.Visible = true;
                         }
 
                     }
@@ -104,71 +102,15 @@ namespace PersonRegistering
 
             }
         }
-            public class AuthenticationResponse
-            {
+        public class AuthenticationResponse
+        {
             public string Token { get; set; }
-            }
+        }
 
-        //string pass = password_txt.Text;
-        //string name = username_txt.Text;
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
-        //string apiUrl = "https://localhost:7050/User"; // Replace with the actual URL
-
-        //try
-        //{
-        //    // Create an instance of HttpClient
-        //    using (HttpClient httpClient = new HttpClient())
-        //    {
-        //        // Define the POST data as an object
-        //        var postData = new
-        //        {
-        //            username = name,
-        //            password = pass
-        //        };
-
-        //        // Serialize the POST data object to JSON
-        //        string postDataJson = JsonConvert.SerializeObject(postData);
-
-        //        // Set the Content-Type header
-        //        httpClient.DefaultRequestHeaders.Add("ContentType", "application/json");
-
-        //        // Create a StringContent with the JSON data
-        //        var content = new StringContent(postDataJson, Encoding.UTF8, "application/json");
-
-        //        // Send the POST request and get the response
-        //        HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
-
-        //        // Ensure a successful response status code (e.g., 200 OK)
-        //        response.EnsureSuccessStatusCode();
-
-        //        // Read the response content
-        //        string responseContent = await response.Content.ReadAsStringAsync();
-
-        //        if (responseContent != "fail")
-        //        {
-        //            // Close the current login form
-        //            this.Visible = false;
-
-        //            // Create and show the authenticated form
-        //            DashboardForm authenticatedForm = new DashboardForm();
-        //            authenticatedForm.ShowDialog();
-        //        }
-        //        else
-        //        {
-        //            // Handle authentication failure
-        //            // For example, display an error message
-        //            MessageBox.Show("Login failed. Please check your username and password.");
-        //        }
-
-        //        // Process the response here
-        //        Console.WriteLine("Response: " + responseContent);
-        //    }
-        //}
-        //catch (HttpRequestException ex)
-        //{
-        //    // Handle any exceptions or errors that may occur during the request
-        //    Console.WriteLine("Error: " + ex.Message);
-        //}
+        }
     }
 }
 

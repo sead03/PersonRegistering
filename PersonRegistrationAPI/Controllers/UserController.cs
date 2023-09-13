@@ -9,63 +9,63 @@ using System.Text;
 namespace PersonRegistrationAPI.Controllers
 {
 
-        [ApiController]
-        [Route("[controller]")]
-        public class UserController : ControllerBase
+    [ApiController]
+    [Route("[controller]")]
+    public class UserController : ControllerBase
+    {
+        [HttpPost(Name = "Login")]
+        public string Login([FromBody] LoginViewModel model)
         {
-            [HttpPost(Name = "Login")]
-            public string Login([FromBody] LoginViewModel model)
+
+            string role = "";
+            string name = "";
+
+            string connectionString = "datasource=127.0.0.1;Database=personregistering;User=root;";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
+                connection.Open();
 
-                string role="";
-                string name="";
-
-                string connectionString = "datasource=127.0.0.1;Database=personregistering;User=root;";
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                string sqlQuery = "SELECT * FROM Users WHERE username = '" + model.username + "' AND password = '" + model.password + "'";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    connection.Open();
-
-                    string sqlQuery = "SELECT * FROM Users WHERE username = '" + model.username + "' AND password = '" + model.password + "'";
-                    using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        if (reader.HasRows == false)
                         {
-                            if (reader.HasRows == false)
-                            {
-                                return "fail";
-                            }
-
-                            while (reader.Read())
-                            {
-                                role = reader["role"].ToString();
-                                name = reader["username"].ToString();
-
-                            }
-                            return GenerateJwtToken(role, name);
+                            return "fail";
                         }
+
+                        while (reader.Read())
+                        {
+                            role = reader["role"].ToString();
+                            name = reader["username"].ToString();
+
+                        }
+                        return GenerateJwtToken(role, name);
                     }
-                    
                 }
-                return "sucess";
+
             }
-            private string GenerateJwtToken(string role, string username, int expirationMinutes = 60)
-            {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("asdasdasdasdajdajshhAKSLDASKLLKADSaddad"));
+            return "sucess";
+        }
+        private string GenerateJwtToken(string role, string username, int expirationMinutes = 60)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("asdasdasdasdajdajshhAKSLDASKLLKADSaddad"));
             var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
+            {
+                Subject = new ClaimsIdentity(new[]
                     {
                 new Claim(ClaimTypes.Role, role),
                 new Claim(ClaimTypes.Name, username),
             }),
-                    Expires = DateTime.UtcNow.AddMinutes(expirationMinutes),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key.Key), SecurityAlgorithms.HmacSha256Signature),
-                };
+                Expires = DateTime.UtcNow.AddMinutes(expirationMinutes),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key.Key), SecurityAlgorithms.HmacSha256Signature),
+            };
 
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                return tokenHandler.WriteToken(token);
-            }
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
-
     }
+
+}

@@ -36,29 +36,31 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.exit_btn = new System.Windows.Forms.Button();
+            this.save_btn = new System.Windows.Forms.Button();
+            this.search_btn = new System.Windows.Forms.Button();
+            this.delete_btn = new System.Windows.Forms.Button();
+            this.name_txt = new System.Windows.Forms.TextBox();
+            this.surname_txt = new System.Windows.Forms.TextBox();
+            this.birthplace_txt = new System.Windows.Forms.TextBox();
+            this.birthday_txt = new System.Windows.Forms.DateTimePicker();
+            this.phone_txt = new System.Windows.Forms.NumericUpDown();
+            this.gender_m = new System.Windows.Forms.RadioButton();
+            this.gender_f = new System.Windows.Forms.RadioButton();
+            this.checkbox_yes = new System.Windows.Forms.CheckBox();
+            this.checkbox_no = new System.Windows.Forms.CheckBox();
+            this.marital_combo = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.phone_txt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 58);
+            this.label1.Location = new System.Drawing.Point(48, 107);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 0;
@@ -68,16 +70,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(84, 117);
+            this.label2.Location = new System.Drawing.Point(48, 166);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "Surname";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(84, 171);
+            this.label3.Location = new System.Drawing.Point(48, 220);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 16);
             this.label3.TabIndex = 2;
@@ -87,7 +90,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(84, 231);
+            this.label4.Location = new System.Drawing.Point(48, 280);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(94, 16);
             this.label4.TabIndex = 3;
@@ -97,25 +100,27 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(408, 64);
+            this.label5.Location = new System.Drawing.Point(372, 113);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 16);
             this.label5.TabIndex = 4;
             this.label5.Text = "Gender";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(408, 117);
+            this.label6.Location = new System.Drawing.Point(372, 166);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 16);
             this.label6.TabIndex = 5;
             this.label6.Text = "Employed";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(408, 171);
+            this.label7.Location = new System.Drawing.Point(372, 220);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 16);
             this.label7.TabIndex = 6;
@@ -125,205 +130,225 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(408, 231);
+            this.label8.Location = new System.Drawing.Point(372, 280);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 16);
             this.label8.TabIndex = 7;
             this.label8.Text = "Birthplace";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
-            // button1
+            // exit_btn
             // 
-            this.button1.Location = new System.Drawing.Point(87, 318);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "  cvdxf vvc                                          ";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.exit_btn.Location = new System.Drawing.Point(67, 367);
+            this.exit_btn.Name = "exit_btn";
+            this.exit_btn.Size = new System.Drawing.Size(75, 23);
+            this.exit_btn.TabIndex = 8;
+            this.exit_btn.Text = "Exit";
+            this.exit_btn.UseVisualStyleBackColor = true;
+            this.exit_btn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // save_btn
             // 
-            this.button2.Location = new System.Drawing.Point(252, 318);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.save_btn.Location = new System.Drawing.Point(210, 367);
+            this.save_btn.Name = "save_btn";
+            this.save_btn.Size = new System.Drawing.Size(75, 23);
+            this.save_btn.TabIndex = 9;
+            this.save_btn.Text = "Save";
+            this.save_btn.UseVisualStyleBackColor = true;
+            this.save_btn.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // search_btn
             // 
-            this.button3.Location = new System.Drawing.Point(385, 318);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.search_btn.Location = new System.Drawing.Point(349, 367);
+            this.search_btn.Name = "search_btn";
+            this.search_btn.Size = new System.Drawing.Size(75, 23);
+            this.search_btn.TabIndex = 10;
+            this.search_btn.Text = "Search";
+            this.search_btn.UseVisualStyleBackColor = true;
+            this.search_btn.Click += new System.EventHandler(this.search_btn_Click);
             // 
-            // button4
+            // delete_btn
             // 
-            this.button4.Location = new System.Drawing.Point(502, 318);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.delete_btn.Location = new System.Drawing.Point(476, 367);
+            this.delete_btn.Name = "delete_btn";
+            this.delete_btn.Size = new System.Drawing.Size(75, 23);
+            this.delete_btn.TabIndex = 11;
+            this.delete_btn.Text = "Delete";
+            this.delete_btn.UseVisualStyleBackColor = true;
+            this.delete_btn.Click += new System.EventHandler(this.delete_btn_Click);
             // 
-            // textBox1
+            // name_txt
             // 
-            this.textBox1.Location = new System.Drawing.Point(194, 58);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 22);
-            this.textBox1.TabIndex = 12;
+            this.name_txt.Location = new System.Drawing.Point(158, 107);
+            this.name_txt.Name = "name_txt";
+            this.name_txt.Size = new System.Drawing.Size(147, 22);
+            this.name_txt.TabIndex = 12;
+            this.name_txt.TextChanged += new System.EventHandler(this.name_txt_TextChanged);
             // 
-            // textBox2
+            // surname_txt
             // 
-            this.textBox2.Location = new System.Drawing.Point(194, 111);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(147, 22);
-            this.textBox2.TabIndex = 13;
+            this.surname_txt.Location = new System.Drawing.Point(158, 160);
+            this.surname_txt.Name = "surname_txt";
+            this.surname_txt.Size = new System.Drawing.Size(147, 22);
+            this.surname_txt.TabIndex = 13;
+            this.surname_txt.TextChanged += new System.EventHandler(this.surname_txt_TextChanged);
             // 
-            // textBox3
+            // birthplace_txt
             // 
-            this.textBox3.Location = new System.Drawing.Point(502, 231);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(121, 22);
-            this.textBox3.TabIndex = 14;
+            this.birthplace_txt.Location = new System.Drawing.Point(466, 280);
+            this.birthplace_txt.Name = "birthplace_txt";
+            this.birthplace_txt.Size = new System.Drawing.Size(121, 22);
+            this.birthplace_txt.TabIndex = 14;
+            this.birthplace_txt.TextChanged += new System.EventHandler(this.birthplace_txt_TextChanged);
             // 
-            // dateTimePicker1
+            // birthday_txt
             // 
-            this.dateTimePicker1.CustomFormat = "dd/mm/yyyy";
-            this.dateTimePicker1.Location = new System.Drawing.Point(194, 166);
-            this.dateTimePicker1.MaxDate = new System.DateTime(2023, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker1.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(147, 22);
-            this.dateTimePicker1.TabIndex = 15;
-            this.dateTimePicker1.Value = new System.DateTime(2023, 9, 12, 0, 0, 0, 0);
+            this.birthday_txt.AllowDrop = true;
+            this.birthday_txt.CustomFormat = "dd-MM-yyyy";
+            this.birthday_txt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.birthday_txt.Location = new System.Drawing.Point(158, 215);
+            this.birthday_txt.MaxDate = new System.DateTime(2023, 12, 31, 0, 0, 0, 0);
+            this.birthday_txt.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.birthday_txt.Name = "birthday_txt";
+            this.birthday_txt.Size = new System.Drawing.Size(147, 22);
+            this.birthday_txt.TabIndex = 15;
+            this.birthday_txt.Value = new System.DateTime(2023, 9, 12, 0, 0, 0, 0);
+            this.birthday_txt.ValueChanged += new System.EventHandler(this.date_txt_ValueChanged);
             // 
-            // numericUpDown1
+            // phone_txt
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(194, 230);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.phone_txt.Location = new System.Drawing.Point(158, 279);
+            this.phone_txt.Maximum = new decimal(new int[] {
+            -1589934593,
+            1,
+            0,
+            0});
+            this.phone_txt.Name = "phone_txt";
+            this.phone_txt.Size = new System.Drawing.Size(147, 22);
+            this.phone_txt.TabIndex = 16;
+            this.phone_txt.Value = new decimal(new int[] {
             1705032704,
             1,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            1705032704,
-            1,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(147, 22);
-            this.numericUpDown1.TabIndex = 16;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1705032704,
-            1,
-            0,
-            0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.phone_txt.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // radioButton1
+            // gender_m
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(488, 62);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.radioButton1.Size = new System.Drawing.Size(39, 20);
-            this.radioButton1.TabIndex = 17;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "M";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.gender_m.AutoSize = true;
+            this.gender_m.Location = new System.Drawing.Point(452, 111);
+            this.gender_m.Name = "gender_m";
+            this.gender_m.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.gender_m.Size = new System.Drawing.Size(39, 20);
+            this.gender_m.TabIndex = 17;
+            this.gender_m.TabStop = true;
+            this.gender_m.Text = "M";
+            this.gender_m.UseVisualStyleBackColor = true;
+            this.gender_m.CheckedChanged += new System.EventHandler(this.gender_m_CheckedChanged);
             // 
-            // radioButton2
+            // gender_f
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(550, 64);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.radioButton2.Size = new System.Drawing.Size(36, 20);
-            this.radioButton2.TabIndex = 18;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "F";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.gender_f.AutoSize = true;
+            this.gender_f.Location = new System.Drawing.Point(505, 113);
+            this.gender_f.Name = "gender_f";
+            this.gender_f.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.gender_f.Size = new System.Drawing.Size(36, 20);
+            this.gender_f.TabIndex = 18;
+            this.gender_f.TabStop = true;
+            this.gender_f.Text = "F";
+            this.gender_f.UseVisualStyleBackColor = true;
+            this.gender_f.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
-            // checkBox1
+            // checkbox_yes
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(502, 116);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(53, 20);
-            this.checkBox1.TabIndex = 19;
-            this.checkBox1.Text = "Yes";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkbox_yes.AutoSize = true;
+            this.checkbox_yes.Location = new System.Drawing.Point(466, 165);
+            this.checkbox_yes.Name = "checkbox_yes";
+            this.checkbox_yes.Size = new System.Drawing.Size(53, 20);
+            this.checkbox_yes.TabIndex = 19;
+            this.checkbox_yes.Text = "Yes";
+            this.checkbox_yes.UseVisualStyleBackColor = true;
+            this.checkbox_yes.CheckedChanged += new System.EventHandler(this.checkbox_yes_CheckedChanged);
             // 
-            // checkBox2
+            // checkbox_no
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(570, 116);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(47, 20);
-            this.checkBox2.TabIndex = 20;
-            this.checkBox2.Text = "No";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.checkbox_no.AutoSize = true;
+            this.checkbox_no.Location = new System.Drawing.Point(534, 165);
+            this.checkbox_no.Name = "checkbox_no";
+            this.checkbox_no.Size = new System.Drawing.Size(47, 20);
+            this.checkbox_no.TabIndex = 20;
+            this.checkbox_no.Text = "No";
+            this.checkbox_no.UseVisualStyleBackColor = true;
+            this.checkbox_no.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
-            // comboBox1
+            // marital_combo
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.marital_combo.BackColor = System.Drawing.Color.White;
+            this.marital_combo.FormattingEnabled = true;
+            this.marital_combo.Items.AddRange(new object[] {
             "Married",
             "Divorced",
             "Widowed",
             "Single"});
-            this.comboBox1.Location = new System.Drawing.Point(502, 168);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 21;
-            this.comboBox1.Text = "Married";
+            this.marital_combo.Location = new System.Drawing.Point(466, 217);
+            this.marital_combo.Name = "marital_combo";
+            this.marital_combo.Size = new System.Drawing.Size(121, 24);
+            this.marital_combo.TabIndex = 21;
+            this.marital_combo.Text = "Married";
+            this.marital_combo.SelectedIndexChanged += new System.EventHandler(this.marital_combo_SelectedIndexChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(235, 25);
+            this.label9.Location = new System.Drawing.Point(269, 51);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(65, 16);
             this.label9.TabIndex = 22;
             this.label9.Text = "Welcome";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(306, 25);
+            this.label10.Location = new System.Drawing.Point(358, 51);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(51, 16);
             this.label10.TabIndex = 23;
             this.label10.Text = "label10";
             this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(654, 78);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 24;
+            // 
             // DashboardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1229, 553);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.marital_combo);
+            this.Controls.Add(this.checkbox_no);
+            this.Controls.Add(this.checkbox_yes);
+            this.Controls.Add(this.gender_f);
+            this.Controls.Add(this.gender_m);
+            this.Controls.Add(this.phone_txt);
+            this.Controls.Add(this.birthday_txt);
+            this.Controls.Add(this.birthplace_txt);
+            this.Controls.Add(this.surname_txt);
+            this.Controls.Add(this.name_txt);
+            this.Controls.Add(this.delete_btn);
+            this.Controls.Add(this.search_btn);
+            this.Controls.Add(this.save_btn);
+            this.Controls.Add(this.exit_btn);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -333,9 +358,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "DashboardForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DashboardForm";
             this.Load += new System.EventHandler(this.DashboardForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.phone_txt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,21 +378,22 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button exit_btn;
+        private System.Windows.Forms.Button save_btn;
+        private System.Windows.Forms.Button search_btn;
+        private System.Windows.Forms.Button delete_btn;
+        private System.Windows.Forms.TextBox name_txt;
+        private System.Windows.Forms.TextBox surname_txt;
+        private System.Windows.Forms.TextBox birthplace_txt;
+        private System.Windows.Forms.DateTimePicker birthday_txt;
+        private System.Windows.Forms.NumericUpDown phone_txt;
+        private System.Windows.Forms.RadioButton gender_m;
+        private System.Windows.Forms.RadioButton gender_f;
+        private System.Windows.Forms.CheckBox checkbox_yes;
+        private System.Windows.Forms.CheckBox checkbox_no;
+        private System.Windows.Forms.ComboBox marital_combo;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
