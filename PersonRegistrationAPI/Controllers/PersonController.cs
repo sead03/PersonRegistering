@@ -6,9 +6,11 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PersonRegistrationAPI.Controllers
 {
-    public class PersonController : Controller
+    [ApiController]
+    [Route("api/person")]
+    public class PersonController : ControllerBase
     {
-        [HttpPost("person")]
+        [HttpPost("add")]
         public IActionResult CreatePerson([FromBody] PersonModel newPerson)
         {
             try
@@ -102,5 +104,39 @@ namespace PersonRegistrationAPI.Controllers
                 return BadRequest();
             }
         }
+            // DELETE: api/resource/5
+            [HttpDelete("delete{id}")]
+            public IActionResult DeleteResource(int id)
+            {
+                try
+                {
+                    // Connect to your MySQL database and execute a DELETE SQL statement
+                    string connectionString = "datasource=127.0.0.1;Database=personregistering;User=root;";
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    {
+                        connection.Open();
+                        string deleteSql = "DELETE FROM person WHERE id = @id";
+                        using (MySqlCommand command = new MySqlCommand(deleteSql, connection))
+                        {
+                            command.Parameters.AddWithValue("@id", id);
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                return NoContent(); // Return a 204 No Content response if the record was successfully deleted
+                            }
+                            else
+                            {
+                                return NotFound(); // Return a 404 Not Found response if the record does not exist
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that may occur during the delete operation
+                    return BadRequest($"Failed to delete resource. Error: {ex.Message}");
+                }
+            }
+        
     }
 }
