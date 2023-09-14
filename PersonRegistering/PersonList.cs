@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using PersonRegistering.Model;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,9 +9,14 @@ namespace PersonRegistering
 {
     public partial class PersonList : Form
     {
-        public PersonList()
+        string username;
+        string role;
+        public PersonList(string username, string role)
         {
             InitializeComponent();
+            this.username = username;
+            this.role = role;
+            if (role == "user") { delete_btn.Visible = false; }
         }
         public void SetDataSource(DataTable dataTable)
         {
@@ -43,7 +44,7 @@ namespace PersonRegistering
                 {
                     using (HttpClient httpClient = new HttpClient())
                     {
-                        string apiUrl = $"https://localhost:7050/api/person/delete{id}";
+                        string apiUrl = $"https://localhost:7050/delete{id}";
 
                         HttpResponseMessage response = await httpClient.DeleteAsync(apiUrl);
 
@@ -71,6 +72,71 @@ namespace PersonRegistering
             else
             {
                 MessageBox.Show("Please select a row to delete.");
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private async void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Get the values from the selected row in DataGridView
+                string name = dataGridView1.Rows[e.RowIndex].Cells["name"].Value.ToString();
+
+                // Make an HTTP GET request to fetch the person data
+                var person = await FetchPersonFromApiAsync(name);
+
+                if (person != null)
+                {
+                    // Create an instance of the DashboardForm and pass the person data
+                    person.username = username;
+                    person.role = role;
+                    DashboardForm dashboardForm = new DashboardForm(person);
+                    dashboardForm.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show("Person not found.");
+                }
+            }
+        }
+        private async Task<PersonModel> FetchPersonFromApiAsync(string name)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = $"https://localhost:7050/getperson?name={name}";
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var person = await response.Content.ReadAsAsync<PersonModel>();
+                    return person;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            PersonModel person = new PersonModel()
+            {
+                username = username,
+                role = role,
+                birthday = DateTime.Now
+            };
+
+            if (person != null)
+            {
+                this.Visible = false;
+                DashboardForm dashboardForm = new DashboardForm(person);
+                dashboardForm.Visible = true;
             }
         }
     }

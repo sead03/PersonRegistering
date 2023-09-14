@@ -2,6 +2,7 @@
 {
     public class PersonModel
     {
+        public bool isAdmin { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public DateTime birthday { get; set; }

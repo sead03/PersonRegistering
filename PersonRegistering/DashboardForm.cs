@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using PersonRegistering.Model;
 using System;
+using System.Data;
 using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.Data;
 
 namespace PersonRegistering
 {
@@ -12,26 +13,35 @@ namespace PersonRegistering
     {
         private string username;
         private string role;
-        private const string ApiEndpointUrl = "https://localhost/7050/api/person"; // Replace with your API endpoint URL
+        private const string ApiEndpointUrl = "https://localhost/7050/person/add"; // Replace with your API endpoint URL
         myDbConnection con = new myDbConnection();
         MySqlCommand command;
         MySqlDataAdapter mySqlDataAdapter;
         DataTable dataTable;
-
-
-        public DashboardForm(string username, string role)
+        public DashboardForm(PersonModel person)
         {
             InitializeComponent();
 
-            con.Connect();
-            string mySqlcon = "Datasource = 127.0.0.1;database=personregistering;user = root;password=;";
-
-            this.username = username;
-            this.role = role;
+            // Set TextBox values based on the person data
+            name_txt.Text = person.name;
+            surname_txt.Text = person.surname;
+            birthday_txt.Value = person.birthday;
+            phone_txt.Value = person.phoneNumber;
+            gender_f.Equals(person.gender);
+            gender_m.Equals(person.gender);
+            checkbox_yes.Equals(person.employed);
+            checkbox_no.Equals(person.employed);
+            marital_combo.Text = person.maritalStatus;
+            birthplace_txt.Text = person.birthplace;
+            label10.Text = person.role;
+            label11.Text = person.username;
+            this.username = person.username;
+            this.role = person.role;
 
             label10.Text = role;
             label11.Text = username;
-
+            con.Connect();
+            string mySqlcon = "Datasource = 127.0.0.1;database=personregistering;user = root;password=;";
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -91,6 +101,7 @@ namespace PersonRegistering
         {
             var personData = new
             {
+                isAdmin = label10.Text == "admin",
                 name = name_txt.Text,
                 surname = surname_txt.Text,
                 birthday = birthday_txt.Value,
@@ -117,12 +128,16 @@ namespace PersonRegistering
                 using (var httpClient = new HttpClient())
                 {
                     var content = new StringContent(JsonConvert.SerializeObject(personData), Encoding.UTF8, "application/json");
-                    var response = await httpClient.PostAsync("https://localhost:7050/person/add", content);
+                    var response = await httpClient.PostAsync("https://localhost:7050/person", content);
 
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Data successfully submitted to the API.");
                         ClearInputFields();
+                    }
+                    else if (response.StatusCode.Equals(System.Net.HttpStatusCode.Unauthorized))
+                    {
+                        MessageBox.Show("The user is unauthorized");
                     }
                     else
                     {
@@ -205,8 +220,12 @@ namespace PersonRegistering
                 mySqlDataAdapter = new MySqlDataAdapter(command);
                 mySqlDataAdapter.Fill(dataTable);
 
+                this.Visible = false;
+
                 // Create an instance of the PersonList form
-                PersonList personListForm = new PersonList();
+                PersonList personListForm = new PersonList(label11.Text, label10.Text);
+
+
 
                 // Pass the DataTable to the PersonList form
                 personListForm.SetDataSource(dataTable);

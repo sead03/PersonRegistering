@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using PersonRegistering.Model;
 using System;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -77,19 +78,15 @@ namespace PersonRegistering
                             // Token validation failed
                             Console.WriteLine($"Token validation failed: {ex.Message}");
                         }
-
-                        if (role == "admin")
+                        this.Visible = false;
+                        PersonModel person = new PersonModel()
                         {
-
-                            DashboardForm dashboardForm = new DashboardForm(username, role) { };
-                            dashboardForm.Visible = true;
-
-                        }
-                        else if (role == "user")
-                        {
-                            DashboardForm dashboardForm = new DashboardForm(username, role) { };
-                            dashboardForm.Visible = true;
-                        }
+                            role = role,
+                            username = username,
+                            birthday = DateTime.Now
+                        };
+                        DashboardForm dashboardForm = new DashboardForm(person) { };
+                        dashboardForm.Visible = true;
 
                     }
                     else

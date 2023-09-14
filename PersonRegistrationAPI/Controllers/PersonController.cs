@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using PersonRegistrationAPI.Model;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace PersonRegistrationAPI.Controllers
 {
-    [ApiController]
-    [Route("api/person")]
+
     public class PersonController : ControllerBase
     {
-        [HttpPost("add")]
+        [HttpPost("person")]
         public IActionResult CreatePerson([FromBody] PersonModel newPerson)
         {
             try
@@ -68,22 +66,29 @@ namespace PersonRegistrationAPI.Controllers
 
                                 else
                                 {
-                                    insertSql = "update person SET (name, surname, birthday, phone_number, gender, employed, marital_status, birthplace) VALUES (@name, @surname, @birthday, @phone_number, @gender, @employed, @marital_status, @birthplace) WHERE name = '" + newPerson.name + "' AND surname = '" + newPerson.surname + "'";
-                                    string update = "UPDATE person SET name = @name, surname = @surname, birthday=@birthday, phone_number=@phone_number, gender=@gender, employed=@employed, marital_status=@marital_status, birthplace=@birthplace Where name = @name and surname = @surname";
+                                    if (!newPerson.isAdmin)
+                                    {
+                                        return Unauthorized("You dont have permission to update!");
+                                    }
+                                    else
+                                    {
+                                        insertSql = "update person SET (name, surname, birthday, phone_number, gender, employed, marital_status, birthplace) VALUES (@name, @surname, @birthday, @phone_number, @gender, @employed, @marital_status, @birthplace) WHERE name = '" + newPerson.name + "' AND surname = '" + newPerson.surname + "'";
+                                        string update = "UPDATE person SET name = @name, surname = @surname, birthday=@birthday, phone_number=@phone_number, gender=@gender, employed=@employed, marital_status=@marital_status, birthplace=@birthplace Where name = @name and surname = @surname";
 
-                                    command.Parameters.AddWithValue("@name", newPerson.name);
-                                    command.Parameters.AddWithValue("@surname", newPerson.surname);
-                                    command.Parameters.AddWithValue("@birthday", newPerson.birthday);
-                                    command.Parameters.AddWithValue("@phone_number", newPerson.phoneNumber);
-                                    command.Parameters.AddWithValue("@gender", newPerson.gender);
-                                    command.Parameters.AddWithValue("@employed", newPerson.employed);
-                                    command.Parameters.AddWithValue("@marital_status", newPerson.maritalStatus);
-                                    command.Parameters.AddWithValue("@birthplace", newPerson.birthplace);
-                                    command.CommandText= update;
-                                    int rowsAffected = command.ExecuteNonQuery();
+                                        command.Parameters.AddWithValue("@name", newPerson.name);
+                                        command.Parameters.AddWithValue("@surname", newPerson.surname);
+                                        command.Parameters.AddWithValue("@birthday", newPerson.birthday);
+                                        command.Parameters.AddWithValue("@phone_number", newPerson.phoneNumber);
+                                        command.Parameters.AddWithValue("@gender", newPerson.gender);
+                                        command.Parameters.AddWithValue("@employed", newPerson.employed);
+                                        command.Parameters.AddWithValue("@marital_status", newPerson.maritalStatus);
+                                        command.Parameters.AddWithValue("@birthplace", newPerson.birthplace);
+                                        command.CommandText = update;
+                                        int rowsAffected = command.ExecuteNonQuery();
 
 
-                                    return Ok();
+                                        return Ok();
+                                    }
                                 }
 
                             }
@@ -104,39 +109,97 @@ namespace PersonRegistrationAPI.Controllers
                 return BadRequest();
             }
         }
-            // DELETE: api/resource/5
-            [HttpDelete("delete{id}")]
-            public IActionResult DeleteResource(int id)
+        // DELETE: api/resource/5
+        [HttpDelete("delete{id}")]
+        public IActionResult DeleteResource(int id)
+        {
+            try
             {
-                try
+                // Connect to your MySQL database and execute a DELETE SQL statement
+                string connectionString = "datasource=127.0.0.1;Database=personregistering;User=root;";
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    // Connect to your MySQL database and execute a DELETE SQL statement
-                    string connectionString = "datasource=127.0.0.1;Database=personregistering;User=root;";
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    connection.Open();
+                    string deleteSql = "DELETE FROM person WHERE id = @id";
+                    using (MySqlCommand command = new MySqlCommand(deleteSql, connection))
                     {
-                        connection.Open();
-                        string deleteSql = "DELETE FROM person WHERE id = @id";
-                        using (MySqlCommand command = new MySqlCommand(deleteSql, connection))
+                        command.Parameters.AddWithValue("@id", id);
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
                         {
-                            command.Parameters.AddWithValue("@id", id);
-                            int rowsAffected = command.ExecuteNonQuery();
-                            if (rowsAffected > 0)
-                            {
-                                return NoContent(); // Return a 204 No Content response if the record was successfully deleted
-                            }
-                            else
-                            {
-                                return NotFound(); // Return a 404 Not Found response if the record does not exist
-                            }
+                            return NoContent(); // Return a 204 No Content response if the record was successfully deleted
+                        }
+                        else
+                        {
+                            return NotFound(); // Return a 404 Not Found response if the record does not exist
                         }
                     }
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the delete operation
+                return BadRequest($"Failed to delete resource. Error: {ex.Message}");
+            }
+        }
+        [HttpGet("getperson")]
+        public IActionResult GetPersonByName([FromQuery] string name)
+        {
+            try
+            {
+                string connectionString = "datasource=127.0.0.1;Database=personregistering;User=root;";
+                string selectSql = "SELECT * FROM person WHERE name = @name";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (MySqlCommand command = new MySqlCommand(selectSql, connection))
                 {
-                    // Handle any exceptions that may occur during the delete operation
-                    return BadRequest($"Failed to delete resource. Error: {ex.Message}");
+                    connection.Open();
+
+                    try
+                    {
+                        // Set parameters for the SELECT statement
+                        command.Parameters.AddWithValue("@name", name);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Create a PersonModel or Person object to hold the data
+                                var person = new PersonModel
+                                {
+                                    name = reader["name"].ToString(),
+                                    surname = reader["surname"].ToString(),
+                                    birthday = Convert.ToDateTime(reader["birthday"]),
+                                    phoneNumber = (int)reader["phone_number"],
+                                    gender = (string)reader["gender"],
+                                    employed = ((bool)reader["employed"]) ? 1 : 0,
+                                    maritalStatus = reader["marital_status"].ToString(),
+                                    birthplace = reader["birthplace"].ToString()
+                                };
+
+                                return Ok(person);
+                            }
+                            else
+                            {
+                                // Person not found
+                                return NotFound();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions (e.g., database errors)
+                        return BadRequest("Failed to retrieve data from the database.");
+                    }
                 }
             }
-        
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., database connection errors)
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
     }
 }
