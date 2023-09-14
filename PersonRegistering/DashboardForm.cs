@@ -20,22 +20,8 @@ namespace PersonRegistering
 
             label10.Text = role;
 
-            if (role == "user")
-            {
-                save_btn.Visible = false;
-            }
 
-            if (gender_m.Checked)
-            {
-                gender_f.Checked = false;
             }
-
-            if (checkbox_no != checkbox_yes)
-            {
-                checkbox_no.Checked = false;
-            }
-
-        }
 
         private void label1_Click(object sender, EventArgs e)
         {
