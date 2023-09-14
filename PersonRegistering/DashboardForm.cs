@@ -32,8 +32,6 @@ namespace PersonRegistering
             label10.Text = role;
             label11.Text = username;
 
-
-
         }
 
         private void label1_Click(object sender, EventArgs e)
