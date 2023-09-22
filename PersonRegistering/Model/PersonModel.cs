@@ -4,7 +4,6 @@ namespace PersonRegistering.Model
 {
     public class PersonModel
     {
-        public bool isAdmin { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public DateTime birthday { get; set; }
@@ -14,7 +13,5 @@ namespace PersonRegistering.Model
         public string maritalStatus { get; set; }
         public string birthplace { get; set; }
 
-        public string username { get; set; }
-        public string role { get; set; }
     }
 }

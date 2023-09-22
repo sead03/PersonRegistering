@@ -94,7 +94,6 @@ namespace PersonRegistering
                         label1.Text = "wrong password or username";
                     }
 
-
                 }
 
             }

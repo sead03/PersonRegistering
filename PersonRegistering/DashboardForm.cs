@@ -29,8 +29,6 @@ namespace PersonRegistering
             phone_txt.Value = person.phoneNumber;
             gender_f.Equals(person.gender);
             gender_m.Equals(person.gender);
-            checkbox_yes.Equals(person.employed);
-            checkbox_no.Equals(person.employed);
             marital_combo.Text = person.maritalStatus;
             birthplace_txt.Text = person.birthplace;
             label10.Text = person.role;
@@ -40,7 +38,6 @@ namespace PersonRegistering
 
             label10.Text = role;
             label11.Text = username;
-            con.Connect();
             string mySqlcon = "Datasource = 127.0.0.1;database=personregistering;user = root;password=;";
         }
 
@@ -224,8 +221,6 @@ namespace PersonRegistering
 
                 // Create an instance of the PersonList form
                 PersonList personListForm = new PersonList(label11.Text, label10.Text);
-
-
 
                 // Pass the DataTable to the PersonList form
                 personListForm.SetDataSource(dataTable);
