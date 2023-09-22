@@ -388,6 +388,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\PersonModel.cs" />
+    <Compile Include="Model\UserModel.cs" />
     <Compile Include="myDbConnection.cs" />
     <Compile Include="PersonList.cs">
       <SubType>Form</SubType>

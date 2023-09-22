@@ -13,14 +13,23 @@ namespace PersonRegistering
     {
         private string username;
         private string role;
-        private const string ApiEndpointUrl = "https://localhost/7050/person/add"; // Replace with your API endpoint URL
-        myDbConnection con = new myDbConnection();
-        MySqlCommand command;
-        MySqlDataAdapter mySqlDataAdapter;
-        DataTable dataTable;
+        private const string ApiEndpointUrl = "https://localhost/7050/person/add"; 
+
         public DashboardForm(PersonModel person)
         {
             InitializeComponent();
+
+            if (person.gender == "M")
+            {
+                gender_m.Checked = true;
+            }
+            else if (person.gender == "F")
+            {
+                gender_f.Checked = true;
+            }
+
+            // Set employment checkbox based on the person's employment status
+            checkbox_yes.Checked = person.employed;
 
             // Set TextBox values based on the person data
             name_txt.Text = person.name;
@@ -96,6 +105,7 @@ namespace PersonRegistering
 
         private async void button2_Click(object sender, EventArgs e)
         {
+
             var personData = new
             {
                 isAdmin = label10.Text == "admin",
@@ -206,35 +216,47 @@ namespace PersonRegistering
 
         }
 
-        public void search_btn_Click(object sender, EventArgs e)
+        public async void search_btn_Click(object sender, EventArgs e)
         {
             try
             {
-                con.cn.Open();
-                command = new MySqlCommand("Select * from person", con.cn);
-                command.ExecuteNonQuery();
-                dataTable = new DataTable();
-                mySqlDataAdapter = new MySqlDataAdapter(command);
-                mySqlDataAdapter.Fill(dataTable);
+                // Create an HttpClient to send the GET request to your API
+                using (HttpClient client = new HttpClient())
+                {
+                    // Define the base URL of your API
+                    string apiUrl = "https://localhost:7050/all";
 
-                this.Visible = false;
+                    // Send the GET request
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    this.Visible = false;
+                    // Check if the response is successful (HTTP status code 200 OK)
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Read the JSON response content
+                        string json = await response.Content.ReadAsStringAsync();
 
-                // Create an instance of the PersonList form
-                PersonList personListForm = new PersonList(label11.Text, label10.Text);
+                        // Parse the JSON data into a DataTable
+                        DataTable dataTable = JsonConvert.DeserializeObject<DataTable>(json);
 
-                // Pass the DataTable to the PersonList form
-                personListForm.SetDataSource(dataTable);
+                        // Create an instance of the PersonList form
+                        PersonList personListForm = new PersonList(label11.Text, label10.Text);
 
-                // Show the PersonList form
-                personListForm.Show();
+                        // Pass the DataTable to the PersonList form
+                        personListForm.SetDataSource(dataTable);
 
-                con.cn.Close();
-
-
+                        // Show the PersonList form
+                        personListForm.Show();
+                    }
+                    else
+                    {
+                        // Handle non-successful HTTP status codes if needed
+                        MessageBox.Show("Failed to retrieve data from the API: " + response.StatusCode.ToString());
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occurred: " + ex.Message);
             }
         }
 
@@ -264,6 +286,11 @@ namespace PersonRegistering
         }
 
         private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

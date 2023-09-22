@@ -97,6 +97,7 @@ namespace PersonRegistering
                     person.role = role;
                     DashboardForm dashboardForm = new DashboardForm(person);
                     dashboardForm.Visible = true;
+
                 }
                 else
                 {
@@ -113,6 +114,7 @@ namespace PersonRegistering
 
                 if (response.IsSuccessStatusCode)
                 {
+
                     var person = await response.Content.ReadAsAsync<PersonModel>();
                     return person;
                 }

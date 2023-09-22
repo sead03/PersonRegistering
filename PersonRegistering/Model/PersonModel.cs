@@ -13,5 +13,7 @@ namespace PersonRegistering.Model
         public string maritalStatus { get; set; }
         public string birthplace { get; set; }
 
+        public string username { get; set; }
+        public string role { get; set; }
     }
 }
